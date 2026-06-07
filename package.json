@@ -1,0 +1,36 @@
+{
+  "name": "server-watchdog",
+  "version": "0.1.0",
+  "description": "Universal self-healing daemon for production backend servers. Watches error logs, identifies root causes with AI, applies fixes, restarts the process, and verifies health — all automatically.",
+  "main": "watchdog.js",
+  "scripts": {
+    "start": "node watchdog.js",
+    "check": "node --check watchdog.js && node --check classifier.js && node --check alerter.js && node --check restarter.js && node --check config.js",
+    "lint": "node --check watchdog.js classifier.js alerter.js restarter.js config.js"
+  },
+  "keywords": [
+    "watchdog",
+    "self-healing",
+    "pm2",
+    "production",
+    "ai",
+    "gemini",
+    "error-monitoring",
+    "auto-fix",
+    "devops"
+  ],
+  "author": "dancherbu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dancherbu/server-watchdog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dancherbu/server-watchdog/issues"
+  },
+  "homepage": "https://github.com/dancherbu/server-watchdog#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {}
+}

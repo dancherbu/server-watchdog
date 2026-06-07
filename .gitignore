@@ -1,0 +1,31 @@
+.env.watchdog
+.env.watchdog.local
+*.env
+
+# Python
+ai_fix_agent/.venv/
+ai_fix_agent/__pycache__/
+ai_fix_agent/**/__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+logs/
+*.log
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp test files written by agent
+/tmp/watchdog-verify-*.js
+/tmp/watchdog-test-*.js

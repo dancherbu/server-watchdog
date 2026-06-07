@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  syntax-check:
+    name: Syntax check (node --check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check all JS files
+        run: |
+          echo "Checking JS files..."
+          find . -name "*.js" \
+            -not -path "./node_modules/*" \
+            -not -path "./.git/*" \
+            | xargs -I{} node --check {} \
+            && echo "✅ All JS files pass syntax check"
+
+  install-check:
+    name: install.sh is valid bash
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate install.sh
+        run: bash -n install.sh && echo "✅ install.sh syntax OK"
+
+  env-example-check:
+    name: .env.watchdog.example has no secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check no real keys in example file
+        run: |
+          # Fail if example contains anything that looks like a real API key
+          if grep -E "(AIza[A-Za-z0-9_-]{35}|ghp_[A-Za-z0-9]{36}|AQ\.[A-Za-z0-9]{20})" \
+               .env.watchdog.example; then
+            echo "❌ .env.watchdog.example appears to contain a real credential"
+            exit 1
+          fi
+          echo "✅ No credentials detected in .env.watchdog.example"
